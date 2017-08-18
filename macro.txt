@@ -1,0 +1,42 @@
+Sub Export_Vers_Carto()
+
+'Programme réalisé par Tony CALVEZ - Pas responsable des utilisations
+
+'Dernière ligne renseignée de la feuille de calculs
+Dim DerniereLigne As Integer
+DerniereLigne = Range("A1").SpecialCells(xlCellTypeLastCell).Row
+
+For n = 1 To DerniereLigne
+
+    For i = 0 To 10
+    Range("C" & n) = Replace(Range("C" & n).Value, i, "")
+    Next
+
+Range("A" & n) = Range("C" & n) & " " & Range("D" & n)
+    
+    If Range("B" & n) = "Branchement individuel neuf en soutirage" Or Range("B" & n) = "Branchement collectif neuf" Then
+    Range("C" & n) = "small_red"
+    
+    ElseIf Range("B" & n) = "Modification de branchement" Then
+    Range("C" & n) = "small_blue"
+    
+    Else
+    Range("C" & n) = "small_green"
+    
+    End If
+    
+Next
+
+Range("A1") = "Location"
+Range("C1") = "Icon"
+
+Range("D:D").Delete
+
+
+
+Application.Dialogs(xlDialogSaveAs).Show ("Export_vers_FusionTable.xls")
+
+Shell """" & Right(Environ(2), Len(Environ(2)) - 8) & "\FirefoxEDF\FirefoxPortable.exe " & """" & "fusiontables.google.com/DataSource?dsrcid=implicit""""", _
+vbMaximizedFocus
+
+End Sub
