@@ -33,10 +33,13 @@ Range("C1") = "Icon"
 Range("D:D").Delete
 
 
+ActiveWorkbook.SaveAs Filename:="C:\Users\" & Environ("USERNAME") & "\Desktop\" & Year(Now) & Month(Now) & Day(Now) & "ExportFusion.xlsx", FileFormat:=xlOpenXMLWorkbook
 
-Application.Dialogs(xlDialogSaveAs).Show ("Export_vers_FusionTable.xls")
 
 Shell """" & Right(Environ(2), Len(Environ(2)) - 8) & "\FirefoxEDF\FirefoxPortable.exe " & """" & "fusiontables.google.com/DataSource?dsrcid=implicit""""", _
 vbMaximizedFocus
+
+ActiveWorkbook.Close SaveChanges:=False
+ThisWorkbook.Close SaveChanges:=False
 
 End Sub
